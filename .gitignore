@@ -2,3 +2,4 @@ scenes/
 *.mel
 *.ma
 scripts/*.mel
+scripts/__pycache__
