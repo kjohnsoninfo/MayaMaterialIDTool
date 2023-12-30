@@ -104,7 +104,8 @@ class MaterialUI(QtWidgets.QDialog):
         settings = self.settings
         col_input, ok = QtWidgets.QInputDialog.getInt(
             self, 'Change Button Columns', 'Number of Button Columns:',
-            settings.value('numOfColumns'), 1, 20, 1)
+            settings.value('numOfColumns'), 1, 20, 1
+            )
         
         if ok:
             settings.setValue('numOfColumns', col_input)
