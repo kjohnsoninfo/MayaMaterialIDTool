@@ -46,7 +46,7 @@ A new window will open asking for your preference and the main UI will close. Th
 
 This number is saved in settings so the most recently set number will be what is used everytime the script runs, until changed again.
 
-### Features to add
+### Features to Add
 TODO:
 * Add context menu to select all objects with a specific material
 * Add a "add new material" button that appends to initial list
