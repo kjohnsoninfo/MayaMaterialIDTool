@@ -157,7 +157,7 @@ class MaterialUI(QtWidgets.QDialog):
         tempwin = cmds.window()
         cmds.columnLayout()
         
-        self.grid_layout = QtWidgets.QGridLayout()
+        grid_layout = QtWidgets.QGridLayout()
         scroll_area = QtWidgets.QScrollArea()
         shader_widget = QtWidgets.QWidget()
         row = 0
@@ -191,7 +191,7 @@ class MaterialUI(QtWidgets.QDialog):
             shader_hbox.addWidget(shader_label, 
                                   alignment=QtCore.Qt.AlignCenter)
 
-            self.grid_layout.addWidget(shader_btn, row, col)
+            grid_layout.addWidget(shader_btn, row, col)
 
             col += 1
 
@@ -199,7 +199,7 @@ class MaterialUI(QtWidgets.QDialog):
         cmds.deleteUI(tempwin)
 
         # Set shader area main layouts
-        shader_widget.setLayout(self.grid_layout)
+        shader_widget.setLayout(grid_layout)
         scroll_area.setWidgetResizable(True)
         scroll_area.setWidget(shader_widget)
         
