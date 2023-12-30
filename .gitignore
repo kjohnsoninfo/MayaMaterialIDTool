@@ -3,3 +3,4 @@ scenes/
 *.ma
 scripts/*.mel
 scripts/__pycache__
+scripts/test*
