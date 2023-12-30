@@ -81,7 +81,8 @@ class MaterialUI(QtWidgets.QDialog):
             sg_filter = fnmatch.filter(sg_list, f'{name}*')
             if len(sg_filter) == 0:
                 sg = cmds.sets(n=name + 'SG', em=True, r=True, nss=True)
-                cmds.connectAttr(mat + '.outColor', sg + '.surfaceShader', f=True)
+                cmds.connectAttr(mat + '.outColor', sg + '.surfaceShader',
+                                 f=True)
             
     # Shader manipulation methods
     def apply_mat(self):
@@ -102,8 +103,8 @@ class MaterialUI(QtWidgets.QDialog):
         
         settings = self.settings
         col_input, ok = QtWidgets.QInputDialog.getInt(
-            self, 'Change Button Columns', 'Number of Button Columns:', settings.value('numOfColumns'), 1, 20, 1
-        )
+            self, 'Change Button Columns', 'Number of Button Columns:',
+            settings.value('numOfColumns'), 1, 20, 1)
         
         if ok:
             settings.setValue('numOfColumns', col_input)
@@ -112,6 +113,7 @@ class MaterialUI(QtWidgets.QDialog):
             ui = MaterialUI()
             ui.show()
         else:
+            # Reopen main ui without changes
             ui = MaterialUI()
             ui.show()
 
@@ -137,7 +139,8 @@ class MaterialUI(QtWidgets.QDialog):
         # Menu bar
         menu_bar = QtWidgets.QMenuBar()
         options_menu = menu_bar.addMenu("Options")
-        change_num_col = QtWidgets.QAction('Change Number of Columns', menu_bar)
+        change_num_col = QtWidgets.QAction('Change Number of Columns',
+                                           menu_bar)
         change_num_col.triggered.connect(self.get_column_input)
         options_menu.addAction(change_num_col)
         
@@ -184,7 +187,8 @@ class MaterialUI(QtWidgets.QDialog):
             shader_btn.setLayout(shader_hbox)
 
             shader_hbox.addWidget(qport, alignment=QtCore.Qt.AlignLeft)
-            shader_hbox.addWidget(shader_label, alignment=QtCore.Qt.AlignCenter)
+            shader_hbox.addWidget(shader_label, 
+                                  alignment=QtCore.Qt.AlignCenter)
 
             self.grid_layout.addWidget(shader_btn, row, col)
 
