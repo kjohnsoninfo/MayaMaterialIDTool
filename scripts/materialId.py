@@ -111,6 +111,9 @@ class MaterialUI(QtWidgets.QDialog):
             # Reopen main ui with new settings
             ui = MaterialUI()
             ui.show()
+        else:
+            ui = MaterialUI()
+            ui.show()
 
     def load_column_settings(self):
         settings = self.settings
