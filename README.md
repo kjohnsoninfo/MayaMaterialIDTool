@@ -7,11 +7,14 @@ Features include:
 * Automatically generate materials and shading groups with random colors for predefined IDs
 * Apply materials to objects with a single button click
 * Reset object materials to default 'lambert1' if mistakes are made
+* Select all objects with a specific material by right clicking the button
 
 UI Features include:
 * Buttons are labeled with color and ID for easy identification
 * Button section in scrollable area so window can be resized to desired fit
 * Change the number of columns in the button grid to user preference which is automatically saved and remembered for future use
+
+![materialId.gif](imgs/materialIdDemo.gif)
 
 ### Installation
 
@@ -49,6 +52,8 @@ Here is an example:
 
 ### Change Number of Columns for the Button Grid
 The first time the script is run, the UI will default to 2 columns for the button grid. However, this can be changed under the "Options" menu in the UI.
+
+![changeCol.gif](imgs/changeCol.gif)
 
 
 A new window will open asking for your preference and the main UI will close. This allows the script to re-build the UI once the user selects a new number. Clicking "OK" will save the new number as the number of columns for the button grid. Clickin "Cancel" will reopen UI without any changes. 
