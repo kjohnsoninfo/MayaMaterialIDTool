@@ -7,13 +7,15 @@ Features include:
 * Automatically generate materials and shading groups with random colors for predefined IDs
 * Apply materials to objects with a single button click
 * Reset object materials to default 'lambert1' if mistakes are made
+* Select all objects with a specific material by right clicking the button
 
 UI Features include:
 * Buttons are labeled with color and ID for easy identification
 * Button section in scrollable area so window can be resized to desired fit
 * Change the number of columns in the button grid to user preference which is automatically saved and remembered for future use
 
-![demo gif](imgs/materialIdDemo.gif)
+![materialId.gif](imgs/materialIdDemo.gif)
+
 ### Installation
 
 The script for the Material Id Tool is inside the scripts folder - ```materialId.py```
@@ -37,18 +39,37 @@ To apply a material, simply select the object(s) that you want to apply the mate
 
 Resetting materials before clicking the newly desired is not necessary. However, if you want to return the object to Maya's default state, use the "Reset Material" button. The "Reset Material" button returns the object's material to Maya's default 'lambert1'. 
 
+### Select All Objects with Specfic Material
+To select all objects with a specific material, simply right click on the button that corresponds to the material you want to select for. All objects that have that material applied will be selected in the viewport. TThis will also work for faces and/or parts of an object. Any previous selections will be cleared. If no objects have that material, nothing will occur. 
+
+### Status Tips for UI
+When hovering over each button, a helpful status tip will show at the bottom left of the Maya Window to remind users of how to activate apply versus select actions. 
+
+Here is an example:
+
+![statusTip.png](imgs/statusTip.png)
+
+
 ### Change Number of Columns for the Button Grid
 The first time the script is run, the UI will default to 2 columns for the button grid. However, this can be changed under the "Options" menu in the UI.
 
-![changeColumn gif](imgs/changeCol.gif)
+![changeCol.gif](imgs/changeCol.gif)
+
 
 A new window will open asking for your preference and the main UI will close. This allows the script to re-build the UI once the user selects a new number. Clicking "OK" will save the new number as the number of columns for the button grid. Clickin "Cancel" will reopen UI without any changes. 
 
 This number is saved in settings so the most recently set number will be what is used everytime the script runs, until changed again.
 
+### Show Material List
+In the 'About' menu, there is the ability to show all the materials in the list if needed for troubleshooting. Clicking 'Show Material List' will open a dialog window with all the predefined materials the script is basing all materials on.
+
+![matList.png](imgs/matList.png)
+
+
 ### Features to Add
 TODO:
-* Add context menu to select all objects with a specific material
+
+* ~~Add context menu to select all objects with a specific material~~ DONE
 * Add a "add new material" button that appends to initial list
 
 ## License
