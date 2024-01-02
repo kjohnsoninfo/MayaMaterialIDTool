@@ -13,8 +13,6 @@ UI Features include:
 * Button section in scrollable area so window can be resized to desired fit
 * Change the number of columns in the button grid to user preference which is automatically saved and remembered for future use
 
-![materialIdDemo gif](imgs/materialIdDemo.gif)
-
 ### Installation
 
 The script for the Material Id Tool is inside the scripts folder - ```materialId.py```
@@ -52,7 +50,6 @@ Here is an example:
 ### Change Number of Columns for the Button Grid
 The first time the script is run, the UI will default to 2 columns for the button grid. However, this can be changed under the "Options" menu in the UI.
 
-![changeColumn gif](imgs/changeCol.gif)
 
 A new window will open asking for your preference and the main UI will close. This allows the script to re-build the UI once the user selects a new number. Clicking "OK" will save the new number as the number of columns for the button grid. Clickin "Cancel" will reopen UI without any changes. 
 
