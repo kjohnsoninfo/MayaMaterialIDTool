@@ -85,14 +85,32 @@ class MaterialUI(QtWidgets.QDialog):
                                  f=True)
             
     # Shader manipulation methods
-    def apply_mat(self):
-        clicked_button = self.sender()
-        mat_name = clicked_button.findChild(QtWidgets.QLabel).text()
+    def apply_mat(self, btn):
+        mat_name = btn.findChild(QtWidgets.QLabel).text()
         cmds.hyperShade(a=mat_name)
 
     def reset_mat(self):
         cmds.hyperShade(a='lambert1')
-    
+
+    def select_obj(self, btn):
+        mat_name = btn.findChild(QtWidgets.QLabel).text()
+        cmds.hyperShade(o=mat_name)
+
+    # Custom shader button mouse events
+    def eventFilter(self, QObject, event):
+        if event.type() == QtCore.QEvent.MouseButtonPress:
+            if event.button() == QtCore.Qt.RightButton:
+                clicked_button = QObject
+                self.select_obj(clicked_button)
+            if event.button() == QtCore.Qt.LeftButton:
+                if event.modifiers() == QtCore.Qt.ShiftModifier:
+                    clicked_button = QObject
+                    self.select_obj(clicked_button)
+                else:
+                    clicked_button = QObject
+                    self.apply_mat(clicked_button)
+        return False
+           
     # Custom column methods
     def get_column_input(self):
         # Close main ui in order to refresh button layout
@@ -126,6 +144,16 @@ class MaterialUI(QtWidgets.QDialog):
             max_col = 2 # default numOfColumns
         return max_col
 
+    # Help menu methods
+    def list_popup(self):
+        msg = QtWidgets.QMessageBox(self)
+        msg.setWindowTitle('Material List')
+        msg_header = 'Material List:\n\n'
+        msg_mats = '\n'.join(mat_list)
+        msg.setText(msg_header + msg_mats)
+        msg.setModal(False)
+        msg.show()
+
     # UI window methods
     # Prevent window duplication
     def check_window_exists(self):
@@ -139,12 +167,18 @@ class MaterialUI(QtWidgets.QDialog):
         
         # Menu bar
         menu_bar = QtWidgets.QMenuBar()
-        options_menu = menu_bar.addMenu("Options")
+        about_menu = menu_bar.addMenu('About')
+        get_initial_list = QtWidgets.QAction('Show Material List',
+                                             menu_bar)
+        get_initial_list.triggered.connect(self.list_popup)
+        about_menu.addAction(get_initial_list)
+
+        options_menu = menu_bar.addMenu('Options')
         change_num_col = QtWidgets.QAction('Change Number of Columns',
                                            menu_bar)
         change_num_col.triggered.connect(self.get_column_input)
         options_menu.addAction(change_num_col)
-        
+
         # Independent tools
         func_hbox = QtWidgets.QHBoxLayout()
         reset_btn = QtWidgets.QPushButton('Reset Material')
@@ -179,7 +213,9 @@ class MaterialUI(QtWidgets.QDialog):
 
             # Initialize button and label
             shader_btn = ResizableButton()
-            shader_btn.clicked.connect(self.apply_mat)
+            shader_btn.installEventFilter(self)
+            shader_btn.setStatusTip('Left Click to Apply Material, ' 
+                                    'Right Click to Select Objects...')
             shader_label = QtWidgets.QLabel(mat)
 
             # Add horizontal layout and port to button
