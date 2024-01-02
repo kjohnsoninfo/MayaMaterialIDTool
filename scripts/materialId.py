@@ -149,8 +149,7 @@ class MaterialUI(QtWidgets.QDialog):
         msg = QtWidgets.QMessageBox(self)
         msg.setWindowTitle('Material List')
         msg_header = 'Material List:\n\n'
-        msg_mats = '\n'.join(mat_list)
-        msg.setText(msg_header + msg_mats)
+        msg.setText(msg_header + str(mat_list))
         msg.setModal(False)
         msg.show()
 
