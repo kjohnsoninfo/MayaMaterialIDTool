@@ -7,7 +7,7 @@ import maya.cmds as cmds
 from PySide2 import QtCore, QtWidgets
 from shiboken2 import wrapInstance
 
-# Initial Materials 
+# Material file functions
 mat_list = ['BlueButton', 'BlueButtonOFF', 'BlueLight', 'Catwalk01',
             'Chrome', 'Concrete', 'ControlPanelBlack', 'ControlPanelGrey', 
             'DarkBlueButton', 'FoilAluminum', 'GeneratorPulse', 'GreenLight',
@@ -18,7 +18,7 @@ mat_list = ['BlueButton', 'BlueButtonOFF', 'BlueLight', 'Catwalk01',
             'PipeMetalGrey', 'PipeMetalImpGrey', 'PipeMetalRed', 'RedButton', 
             'RedButtonOFF', 'RedLight', 'RoughMetal', 'RubberFloor', 
             'StripesPipe', 'StripesPipePOM', 'Trim01POM', 'WallGrid01', 
-            'WhiteButton', 'WhiteButtonOFF']
+            'WhiteButton', 'WhiteButtonOFF', 'ImpMetal', 'LaserGate']
 
 # Custom UI class and functions
 class ResizableButton(QtWidgets.QPushButton):
