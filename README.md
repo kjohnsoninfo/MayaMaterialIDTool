@@ -70,7 +70,8 @@ In the 'About' menu, there is the ability to show all the materials in the list 
 TODO:
 
 * ~~Add context menu to select all objects with a specific material~~ DONE
-* Add a "add new material" button that appends to initial list
+* Fix hardcoding materials by reading from file instead
+* Add a "add new material" button that appends to file
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
