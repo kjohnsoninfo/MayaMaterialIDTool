@@ -25,7 +25,7 @@ To utilize the script with Maya:
 2. Open the script editor in your scene. There are several ways: [MayaHelpScriptEditor](https://help.autodesk.com/view/MAYAUL/2023/ENU/?guid=GUID-7C861047-C7E0-4780-ACB5-752CD22AB02E)
 3. Open the materialId.py script in the script editor and run
 
-The script can also be saved to your shelf for easy access. Here is some Maya Documentation to save scripts to shelf: [MayaHelpSaveToShelf](https://help.autodesk.com/view/MAYAUL/2024/ENU/?guid=GUID-C693E884-F81A-4858-B5D6-3856EB8F394E)
+The script can also be saved to your shelf for easy access. Here is some Maya Documentation to save scripts to shelf: [MayaHelpSaveToShelf](https://help.autodesk.com/view/MAYAUL/2024/ENU/?guid=GUID-C693E884-F81A-4858-B5D6-3856EB8F394E). The imgs folder in the repo also contains two versions of icons that can replace the default python icon in Maya: Crystal and Diamond Icons.
 
 ### Generate Materials
 When you run the script for the first time, it will generate all the materials and shader groups for the IDs predefined in the list. This list can be adjusted in the code if desired.
@@ -70,7 +70,8 @@ In the 'About' menu, there is the ability to show all the materials in the list 
 TODO:
 
 * ~~Add context menu to select all objects with a specific material~~ DONE
-* Add a "add new material" button that appends to initial list
+* Fix hardcoding materials by reading from file instead
+* Add a "add new material" button that appends to file
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
