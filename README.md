@@ -26,7 +26,7 @@ To utilize the script with Maya:
 2. Open the script editor in your scene. There are several ways: [MayaHelpScriptEditor](https://help.autodesk.com/view/MAYAUL/2023/ENU/?guid=GUID-7C861047-C7E0-4780-ACB5-752CD22AB02E)
 3. Open the materialId.py script in the script editor and run
 
-The script can also be saved to your shelf for easy access. Here is some Maya Documentation to save scripts to shelf: [MayaHelpSaveToShelf](https://help.autodesk.com/view/MAYAUL/2024/ENU/?guid=GUID-C693E884-F81A-4858-B5D6-3856EB8F394E). The imgs folder in the repo also contains two versions of icons that can replace the default python icon in Maya: Crystal and Diamond Icons.
+The script can also be saved to your shelf for easy access. Here is some Maya Documentation to save scripts to shelf: [MayaHelpSaveToShelf](https://help.autodesk.com/view/MAYAUL/2024/ENU/?guid=GUID-C693E884-F81A-4858-B5D6-3856EB8F394E). The imgs/icons folder in the repo also contains two versions of icons that can replace the default python icon in Maya: Crystal and Diamond Icons.
 
 ### On First Install
 The script is built to read in the material IDs from an external text file. On first install, a popup will appear that asks the user to select the location of material ID file on their computer. Your material ID file can be saved anywhere. The script will save this file path so you should only see this message when running the script for the first time.
@@ -34,7 +34,8 @@ The script is built to read in the material IDs from an external text file. On f
 ![pathInstall.png](imgs/pathInstall.png)
 
 A File Dialog will open after clicking OK:
-![chooseFile.png](imgs/chooseFile.png)
+
+<img src="https://github.com/kjohnson8781/MayaTools_KJ/blob/main/imgs/chooseFile.png?raw=true" width="550" />
 
 > [!WARNING]  
 > This external file MUST be a text file. You will not be able to select anything but a text file.
@@ -54,7 +55,7 @@ Here is an example of what the text file should look like:
 
 
 ### Changing Material ID Text File
-You can manually change the text file at any time. Re-run the script after editing the file to see your changes reflected. Remmeber the rules of the file!
+You can manually change the text file at any time. Re-run the script after editing the file to see your changes reflected. Remember the rules of the file!
 
 #### Add New Material
 The script is able to add a new material to the pregenerated material ID text file through the 'Add New Material' button. This will open a popup where you can input the name of the new material. 
@@ -66,6 +67,7 @@ There are two safety measures to ensure a valid input:
 2. User cannot add a name that already exists. The name is case sensitive so "Material1" and "MATERIAL1" are considered different names. 
 
 The OK button will be disabled and error messages displayed in each situation.
+
 ![addNewExists.png](imgs/addNewExists.png)
 
 After selecting a valid name and clicking OK, the main UI will refresh (this may take a second and the UI will flash), the new material will be created and a new button will be visible at the END of the button list.
@@ -80,7 +82,8 @@ There are two safety measures to ensure a valid input:
 2. User cannot delete a name that does not exist
 
 The OK button will be disabled and error messages displayed in each situation.
-![deleteMatNoExists.png](imgs/deleteMatNoExists.png)
+
+![deleteMatNoExist.png](imgs/deleteMatNoExist.png)
 
 
 #### Changing File Path
@@ -99,7 +102,7 @@ To apply a material, simply select the object(s) that you want to apply the mate
 
 Resetting materials before clicking the newly desired is not necessary. However, if you want to return the object to Maya's default state, use the "Reset Material" button. The "Reset Material" button returns the object's material to Maya's default 'lambert1'. 
 
-### Select All Objects with Specfic Material
+### Select All Objects with Specific Material
 To select all objects with a specific material, simply right click on the button that corresponds to the material you want to select for. All objects that have that material applied will be selected in the viewport. This will also work for faces and/or parts of an object. Any previous selections will be cleared. If no objects have that material, nothing will occur. 
 
 ### Status Tips for UI
@@ -113,20 +116,20 @@ Here is an example:
 ### Change Number of Columns for the Button Grid
 The first time the script is run, the UI will default to 2 columns for the button grid. However, this can be changed under the "Options" menu in the UI.
 
-![changeCol.gif](imgs/changeCol.gif)
+<img src="https://github.com/kjohnson8781/MayaTools_KJ/blob/main/imgs/changeCol.gif?raw=true" width="550" />
 
 
 A new window will open asking for your preference and the main UI will close. This allows the script to re-build the UI once the user selects a new number. Clicking "OK" will save the new number as the number of columns for the button grid. Clicking "Cancel" will result in no changes.
 
-This number is saved in settings so the most recently set number will be what is used everytime the script runs, until changed again.
+This number is saved in settings so the most recently set number will be what is used every time the script runs, until changed again.
 
 ### Show Info About Materials
 In the 'About' menu, click 'Show Material Info' to find information about the values used in the script. 
 It currently displays the following:
-1. File paht to the pregenerated material ID text file
+1. File path to the pregenerated material ID text file
 2. List of all materials
 
-![matList.png](imgs/aboutinfo.png)
+![aboutinfo.png](imgs/aboutInfo.png)
 
 
 ### Features to Add
