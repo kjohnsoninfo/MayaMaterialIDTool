@@ -4,7 +4,7 @@ This repo contains Maya scripts mostly written for developers and artists I'm wo
 The Material ID Tool allows a user to apply generated IDs to objects in Maya for visualization purposes and easy texture assignment when moving assets to other DCCs. The tool was originally created for asset migration to Unreal Engine 5 but is not restricted. 
 
 Features include:
-* Read, add, and delete predefined material IDs from a txt file
+* Read, add, and delete predefined material IDs from a .txt file
 * Automatically generate materials and shading groups with random colors for predefined IDs
 * Apply materials to objects with a single button click
 * Reset object materials to default 'lambert1' if mistakes are made
