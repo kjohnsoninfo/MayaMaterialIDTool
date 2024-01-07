@@ -82,7 +82,8 @@ There are two safety measures to ensure a valid input:
 2. User cannot delete a name that does not exist
 
 The OK button will be disabled and error messages displayed in each situation.
-![deleteMatNoExists.png](imgs/deleteMatNoExists.png)
+
+![deleteMatNoExist.png](imgs/deleteMatNoExist.png)
 
 
 #### Changing File Path
