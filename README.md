@@ -5,7 +5,7 @@ The Material ID Tool allows a user to apply generated IDs to objects in Maya for
 
 Features include:
 * Read, add, and delete predefined material IDs from a .txt file
-* Automatically generate materials and shading groups with random colors for predefined IDs
+* Automatically generate materials and shading groups with random colors for each ID
 * Apply materials to objects with a single button click
 * Reset object materials to default 'lambert1' if mistakes are made
 * Select all objects with a specific material by right clicking the button
