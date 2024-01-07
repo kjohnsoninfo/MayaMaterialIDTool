@@ -26,6 +26,7 @@ class NoEmptyStringDialog(QtWidgets.QDialog):
 
         self.mat_name = QtWidgets.QLineEdit()
         self.error_msg = QtWidgets.QLabel()
+        self.error_msg.setText('Material name cannot be blank!')
 
         btn_box = QtWidgets.QDialogButtonBox()
         btn_box.setStandardButtons((QtWidgets.QDialogButtonBox.Cancel 
@@ -53,8 +54,10 @@ class NoEmptyStringDialog(QtWidgets.QDialog):
     def on_text_changed(self, text):
         if not text:
             self.btn_accept.setEnabled(False)
+            self.error_msg.setText('Material name cannot be blank!')
         else:
             self.btn_accept.setEnabled(True)
+            self.error_msg.setText('')
 
 # Main UI class and functions
 def main_window():
@@ -71,11 +74,13 @@ class MaterialUI(QtWidgets.QDialog):
         self.setAttribute(QtCore.Qt.WA_DeleteOnClose) # Ensures cleanup
 
         self.settings = QtCore.QSettings('KYBER', 'MaterialIDGenerator')
+        self.first = False
         self.mat_list = self.create_material_list()
         max_col = self.load_column_settings()
 
         self.create_shaders()
-        self.close_window_if_exists()
+        if not self.first:
+            self.close_window_if_exists()
         self.create_ui(max_col)
     
     # Material file functions
@@ -103,10 +108,10 @@ class MaterialUI(QtWidgets.QDialog):
         
     def load_material_path(self):
         settings = self.settings
-        
         # Get path if it already exists
         if settings.contains('matListPath'):
             mat_path = settings.value('matListPath')
+            self.first = False
         
         # Ask user for path if does not exist
         else:
@@ -119,6 +124,7 @@ class MaterialUI(QtWidgets.QDialog):
                 # If file is selected, save path. If canceled, alert user. 
                 if mat_path:
                     settings.setValue('matListPath', mat_path)
+                    self.first = True
                 else:
                     raise Exception(('No Material ID File path was specified. ' 
                                     'Please rerun and select a text file.'))
@@ -132,7 +138,8 @@ class MaterialUI(QtWidgets.QDialog):
         return mat_list
 
     def update_mat_file(self):
-        choose_file = QtWidgets.QFileDialog.getOpenFileName(self, 'Choose File')
+        choose_file = QtWidgets.QFileDialog.getOpenFileName(
+            self, 'Choose File',  filter="*.txt")
         mat_path = choose_file[0]
         settings = self.settings
 
@@ -196,7 +203,7 @@ class MaterialUI(QtWidgets.QDialog):
 
         def exists_error(text):
             if text in self.mat_list:
-                dlg.error_msg.setText('Material already exists!')
+                dlg.error_msg.setText('Material name already exists!')
                 dlg.btn_accept.setEnabled(False)
             if text and text not in self.mat_list:
                 dlg.error_msg.setText('')
@@ -325,8 +332,10 @@ class MaterialUI(QtWidgets.QDialog):
     # UI window methods
     def close_window_if_exists(self):
         if QtWidgets.QApplication.instance():
+            print('start')
             for window in (QtWidgets.QApplication.allWindows()):
                 if 'MaterialIdUI' in window.objectName():
+                    print(window)
                     window.close()
 
     def create_ui(self, max_col):
