@@ -9,16 +9,32 @@ from shiboken2 import wrapInstance
 
 # Custom UI class and functions
 class ResizableButton(QtWidgets.QPushButton):
+    """Resize push button for custom dialog box"""
     def sizeHint(self):
+        """
+        Gets size hint of a button based on its layout
+
+        Returns:
+            A default size hint or a size hint based on content
+        """
         if self.layout():
-            # if btn has layout, return sizeHint so it sizes based on contents
             return self.layout().sizeHint()
-        # no layout set, return default sizeHint
         return super().sizeHint()
 
 class NoEmptyStringDialog(QtWidgets.QDialog):
-    def __init__(self, parent=None, window_name='', label='Material Name'):
+    """Custom Dialog Box that requires user input to not be empty"""
+    def __init__(self, parent=None, window_name='', label=None):
+        """Initializes instance based on window and label name
+
+        Args:
+            parent: Defines QObject that the instance is a child of
+            window_name: Defines name of the QDialog window
+            label: Defines string that appears as the title of the dialog box
+        """
         super(NoEmptyStringDialog, self).__init__(parent)
+
+        if label == None:
+            label = 'Material Name'
 
         self.dialog_box = QtWidgets.QDialog()
         self.dialog_box.setWindowTitle(window_name)
@@ -47,11 +63,20 @@ class NoEmptyStringDialog(QtWidgets.QDialog):
         self.dialog_box.deleteLater()
 
     def get_mat_name(self):
+        """Grabs text of the user entered material name
+
+        Returns:
+            A user-inputted string
+        """
         if self.dialog_box.exec_():
-            # print(self.mat_name.text())
             return self.mat_name.text()
     
     def on_text_changed(self, text):
+        """Checks if user has entered text and enables accept button if true
+
+        Args:
+            text: The string grabbed from the user input box
+        """
         if not text:
             self.btn_accept.setEnabled(False)
             self.error_msg.setText('Material name cannot be blank!')
@@ -61,11 +86,23 @@ class NoEmptyStringDialog(QtWidgets.QDialog):
 
 # Main UI class and functions
 def main_window():
+    """Gets the Maya main window widget
+
+    Returns:
+        (QWidget): Maya main window
+        
+    """
     window_int = omui.MQtUtil.mainWindow()
     return wrapInstance(int(window_int), QtWidgets.QWidget)
 
 class MaterialUI(QtWidgets.QDialog):
+    """Custom Material ID dialog box"""
     def __init__(self, parent=main_window()):
+        """Initializes instance based on window and label name
+
+        Args:
+            parent: Defines QObject that the instance is a child of
+        """
         super(MaterialUI, self).__init__(parent)
         self.setWindowFlags(QtCore.Qt.Window)
         self.setObjectName('MaterialIdUI')
@@ -85,6 +122,14 @@ class MaterialUI(QtWidgets.QDialog):
     
     # Material file functions
     def no_mat_path_popup(self):
+        """Defines dialog box if no material file path is detected
+
+        Returns:
+            bool: True if user selects OK button
+
+        Raises:
+            Exception: An error occurs if user selects Cancel button
+        """
         msg = QtWidgets.QMessageBox(self)
         msg.setAttribute(QtCore.Qt.WA_DeleteOnClose)
         msg.setWindowTitle('Material ID File Path Installation')
@@ -107,6 +152,14 @@ class MaterialUI(QtWidgets.QDialog):
                              'rerun and select a text file.'))
         
     def load_material_path(self):
+        """Gets txt file path if it exists  in user settings or triggers popup if it does not exist
+
+        Returns:
+            string: A string that defines the txt file path
+
+        Raises:
+            Exception: An error occurs if no file path is specified
+        """
         settings = self.settings
         # Get path if it already exists
         if settings.contains('matListPath'):
@@ -132,12 +185,18 @@ class MaterialUI(QtWidgets.QDialog):
         return mat_path
 
     def create_material_list(self):
+        """Creates list of materials based on txt file
+
+        Returns:
+            list[str]: A list of strings parsed from contents of txt file
+        """
         mat_path = self.load_material_path()
         with open(mat_path, 'r') as mat_file:
             mat_list = mat_file.read().splitlines()
         return mat_list
 
     def update_mat_file(self):
+        """Opens dialog box for user to select material txt file"""
         choose_file = QtWidgets.QFileDialog.getOpenFileName(
             self, 'Choose File',  filter="*.txt")
         mat_path = choose_file[0]
@@ -151,6 +210,12 @@ class MaterialUI(QtWidgets.QDialog):
         
     # Shader creation methods
     def rand_color(self):
+        """Creates list of random colors
+
+        Returns:
+            list[tuple[float, float, float]]: A list of tuples made up of three 
+            float numbers that define a RGB color value
+        """
         # comment out seed line to randomize palette on every run 
         # or change the seed to get different color palettes
         random.seed(80)
@@ -165,11 +230,22 @@ class MaterialUI(QtWidgets.QDialog):
         return rgb_colors
 
     def populate_shader_dict(self):
+        """Assigns each material to a random color
+
+        Returns:
+            A dict mapping material names to a RGB color value
+            Each name is represented as a tuple of floats. For
+            example:
+
+            {'Material1': (255, 255, 255),
+            'Material2': (0, 0, 0)}
+        """
         color_list = self.rand_color()
         shader_dict = {mat: color for mat, color in zip(self.mat_list, color_list)}
         return shader_dict
 
     def create_shaders(self):
+        """Creates lambert shading node and shading group for each material in Maya"""
         shader_dict = self.populate_shader_dict()
         for name, color in shader_dict.items():
             mat = cmds.shadingNode('lambert', asShader=True, n=name, 
@@ -186,17 +262,29 @@ class MaterialUI(QtWidgets.QDialog):
             
     # Shader manipulation methods
     def apply_mat(self, btn):
+        """Sets hyperShade material to the material button selected by the user 
+
+        Args:
+            btn: Defines the QWidget button that was selected by the user
+        """
         mat_name = btn.findChild(QtWidgets.QLabel).text()
         cmds.hyperShade(a=mat_name)
 
     def reset_mat(self):
+        """Sets hyperShade material to default lambert1"""
         cmds.hyperShade(a='lambert1')
 
     def select_obj(self, btn):
+        """Selects Maya objects that have the material of the button selected by the user
+
+        Args:
+            btn: Defines the QWidget button that was selected by the user
+        """
         mat_name = btn.findChild(QtWidgets.QLabel).text()
         cmds.hyperShade(o=mat_name)
 
-    def add_new_mat(self):        
+    def add_new_mat(self):
+        """Opens dialog box for user to add a new material to their list"""        
         # Get user input within popup UI
         dlg = NoEmptyStringDialog(self, 'Add New Material', 
                                   'New Material Name:')
@@ -227,6 +315,7 @@ class MaterialUI(QtWidgets.QDialog):
                 ui.show()
 
     def delete_mat(self):
+        """Opens dialog box that allows user to remove material from their list"""
         # Get user input within popup UI
         dlg = NoEmptyStringDialog(self, 'Delete Material', 
                                   'Material to Delete:')
@@ -280,6 +369,15 @@ class MaterialUI(QtWidgets.QDialog):
 
     # Custom shader button mouse events
     def eventFilter(self, QObject, event):
+        """Defines tool behavior based on the mouse button a user presses
+
+        Args:
+            QObject: Defines the mouse button that was selected by the user
+            event: Defines the QEvent that triggers different behavior
+
+        Returns:
+            bool: False if event type is not a mouse button press
+        """
         if event.type() == QtCore.QEvent.MouseButtonPress:
             if event.button() == QtCore.Qt.RightButton:
                 clicked_button = QObject
@@ -295,6 +393,7 @@ class MaterialUI(QtWidgets.QDialog):
            
     # Custom column methods
     def get_column_input(self):
+        """Gets user input for how many columns of buttons in the user interface window"""
         settings = self.settings
         col_input, ok = QtWidgets.QInputDialog.getInt(
             self, 'Change Button Columns', 'Number of Button Columns:',
@@ -308,6 +407,11 @@ class MaterialUI(QtWidgets.QDialog):
             ui.show()
 
     def load_column_settings(self):
+        """Gets saved setting for how many columns of buttons in the user interface window and sets default
+
+        Returns:
+            max_col: An int that defines the number of button columns in the user interface
+        """
         settings = self.settings
         if settings.contains('numOfColumns'):
             max_col = settings.value('numOfColumns')
@@ -317,6 +421,7 @@ class MaterialUI(QtWidgets.QDialog):
 
     # Help menu methods
     def info_popup(self):
+        """Defines message box for helpful user info such as file path and materials"""
         msg = QtWidgets.QMessageBox(self)
         msg.setWindowTitle('Material Info')
         msg.setAttribute(QtCore.Qt.WA_DeleteOnClose)
@@ -331,14 +436,18 @@ class MaterialUI(QtWidgets.QDialog):
 
     # UI window methods
     def close_window_if_exists(self):
+        """Closes window if it already exists so user can only have one window open at a time"""
         if QtWidgets.QApplication.instance():
-            print('start')
             for window in (QtWidgets.QApplication.allWindows()):
                 if 'MaterialIdUI' in window.objectName():
-                    print(window)
                     window.close()
 
     def create_ui(self, max_col):
+        """Defines main UI layout for tool
+
+        Args:
+            max_col: An int that defines the number of button columns in the user interface
+        """
         main_layout = QtWidgets.QVBoxLayout()
         
         # Menu bar
@@ -433,5 +542,6 @@ class MaterialUI(QtWidgets.QDialog):
         self.setLayout(main_layout)
     
 if __name__ == "__main__":
+    """Main function which initializes shows Material Id UI"""
     ui = MaterialUI()
     ui.show()
